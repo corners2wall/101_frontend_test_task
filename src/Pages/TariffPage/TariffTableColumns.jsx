@@ -1,10 +1,13 @@
-function renderCell(property, object, payload) {
-    if (!property) return <span> - </span>
+import { TableCell } from "@material-ui/core"
 
-    return <span>{property}</span>
+function renderCell(property, object, payload) {
+    
+    return (<TableCell>
+      {property ? property : "-"}
+    </TableCell>)
 }
 
-export const tariffTableColumns = [
+export const tariffColumns = [
     {
         title: "Название тарифа",
         dataPath: "name",

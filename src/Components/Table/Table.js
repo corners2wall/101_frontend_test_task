@@ -10,34 +10,34 @@ import { useMemo } from "react";
 
 const getDefaultRowKey = (object) => object.id;
 
+//ToDo: Add pagination if it necessary. Use themProvide for ru locale
 export default function Table({
   data,
   columns,
   getRowKey = getDefaultRowKey,
   payload,
 }) {
-  const tableColumns = useMemo(() => {
-    return columns.map((column, index) => (
-      <TableCell key={index}>{column.title}</TableCell>
-    ));
-  }, [columns]);
+  const tableColumns = useMemo(
+    () => (
+      <TableRow>
+        {columns.map((column, index) => (
+          <TableCell key={index}>{column.title}</TableCell>
+        ))}
+      </TableRow>
+    ),
+    [columns]
+  );
 
   return (
     <MUITable>
-      <TableHead>
-        <TableRow>{tableColumns}</TableRow>
-      </TableHead>
+      <TableHead>{tableColumns}</TableHead>
       <TableBody>
         {data.map((item) => (
           <TableRow key={getRowKey(item)}>
             {columns.map(({ dataPath, renderCell }, index) => {
               const property = getObjectProperty(item, dataPath);
 
-              return (
-                <TableCell key={index}>
-                  {renderCell(property, item, payload)}
-                </TableCell>
-              );
+              return renderCell(property, item, payload);
             })}
           </TableRow>
         ))}

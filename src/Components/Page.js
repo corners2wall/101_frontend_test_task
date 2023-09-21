@@ -8,17 +8,14 @@ import {
   Select,
   MenuItem,
   TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   Paper,
-  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { PROVIDERS_QUERY } from "../Queries/providersQuery";
 import { TARIFFS_QUERY } from "../Queries/tariffsQuery";
+import Table from "./Table";
+import { tariffTableColumns } from "../Pages/TariffPage/TariffTableColumns";
+import { data } from "../Consts/data";
 
 const REGION_URL = "moskva";
 
@@ -100,22 +97,7 @@ function Page() {
         </Select>
       </FormControl>
       <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Название тарифа</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tariffsData.map((tariff) => (
-              <TableRow key={tariff.id}>
-                <TableCell component="th" scope="row">
-                  {tariff.name}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Table data={data} columns={tariffTableColumns} />
       </TableContainer>
     </Container>
   );

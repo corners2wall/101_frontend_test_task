@@ -16,6 +16,7 @@ import { TARIFFS_QUERY } from "../Queries/tariffsQuery";
 import Table from "./Table";
 import { tariffColumns } from "../Pages/TariffPage/TariffTableColumns";
 import { data } from "../Consts/data";
+import useTariffsMapper from "../Pages/TariffPage/useTariffsMapper";
 
 const REGION_URL = "moskva";
 
@@ -59,6 +60,8 @@ function Page() {
     notifyOnNetworkStatusChange: true,
   });
   const tariffsData = tariffs?.data?.tariffs?.data || [];
+
+  const dat = useTariffsMapper(data);
 
   const handleChange = (event) => {
     const foundProvider = providersData.find(

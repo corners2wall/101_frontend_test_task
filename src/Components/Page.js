@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useQuery } from "react-apollo";
 import {
   Container,
   Typography,
@@ -11,12 +10,12 @@ import {
   Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { PROVIDERS_QUERY } from "../Queries/providersQuery";
-import { TARIFFS_QUERY } from "../Queries/tariffsQuery";
 import Table from "./Table";
 import { tariffColumns } from "../Pages/TariffPage/TariffTableColumns";
 import { data } from "../Consts/data";
 import useTariffsMapper from "../Pages/TariffPage/useTariffsMapper";
+import useLoadTariffs from "../Hooks/useLoadTariffs";
+import useLoadProviders from "../Hooks/useLoadProviders";
 
 const REGION_URL = "moskva";
 
@@ -38,38 +37,16 @@ function Page() {
 
   const [currentProvider, setCurrentProvider] = useState({});
 
-  const providers = useQuery(PROVIDERS_QUERY, {
-    variables: {
-      filter: `region.url=${REGION_URL}`,
-      limit: 50,
-      offset: 0,
-      sort: "name",
-    },
-    notifyOnNetworkStatusChange: true,
-  });
-  const providersData = providers?.data?.providers?.data || [];
+  const providers = useLoadProviders(REGION_URL);
 
-  const tariffs = useQuery(TARIFFS_QUERY, {
-    skip: !currentProvider?.id,
-    variables: {
-      filter: `region.url=${REGION_URL}&provider.url_name=${currentProvider.url_name}`,
-      limit: 100,
-      offset: 0,
-      sort: "name",
-    },
-    notifyOnNetworkStatusChange: true,
-  });
-  const tariffsData = tariffs?.data?.tariffs?.data || [];
+  const tariffs = useLoadTariffs(REGION_URL, currentProvider);
 
-  const dat = useTariffsMapper(data);
+  const {} = useTariffsMapper(tariffs);
 
   const handleChange = (event) => {
-    const foundProvider = providersData.find(
-      (x) => x.id === +event.target.value
-    );
-    if (foundProvider) {
-      setCurrentProvider(foundProvider);
-    }
+    const foundProvider = providers.find((x) => x.id === +event.target.value);
+
+    if (foundProvider) setCurrentProvider(foundProvider);
   };
 
   return (
@@ -90,7 +67,7 @@ function Page() {
           <MenuItem value="0">
             <em>None</em>
           </MenuItem>
-          {providersData
+          {providers
             .filter((x) => x.info.cnt_tariffs > 0)
             .map((provider) => (
               <MenuItem key={provider.id} value={provider.id}>

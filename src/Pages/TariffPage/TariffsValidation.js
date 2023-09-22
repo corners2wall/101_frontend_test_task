@@ -1,4 +1,4 @@
-function useValidateChannels(ctx) {
+function checkChannels(ctx) {
   const channels = ctx.object?.tv?.channels;
 
   if (!channels) ctx.tariffsWithPartialFields.add(ctx.object);
@@ -6,7 +6,7 @@ function useValidateChannels(ctx) {
   return ctx;
 }
 
-function useValidateInternetSpeed(ctx) {
+function checkInternetSpeed(ctx) {
   const internetSpeed = ctx.object?.internet?.speed_in;
 
   if (!internetSpeed) ctx.tariffsWithPartialFields.add(ctx.object);
@@ -14,7 +14,7 @@ function useValidateInternetSpeed(ctx) {
   return ctx;
 }
 
-function useValidatePrice(ctx) {
+function checkPrice(ctx) {
   const price = ctx.object?.displayPrice;
 
   if (!price) ctx.tariffsWithPartialFields.add(ctx.object);
@@ -22,7 +22,7 @@ function useValidatePrice(ctx) {
   return ctx;
 }
 
-function useValidateHDChannels(ctx) {
+function checkHDChannels(ctx) {
   const hdChannels = ctx.object?.tv?.channels_hd;
 
   if (!hdChannels) {
@@ -33,7 +33,7 @@ function useValidateHDChannels(ctx) {
   return ctx;
 }
 
-function useValidateAllFields(ctx) {
+function checkAllFields(ctx) {
   const object = ctx.object;
   const hasPartialFields =
     ctx.tariffsWithoutHDChannels.has(object) ||
@@ -44,10 +44,29 @@ function useValidateAllFields(ctx) {
   return ctx;
 }
 
+function findBestValue(ctx) {
+  const currentChannels = ctx.object?.tv?.channels ?? 0;
+  const currentInternetSpeed = ctx.object?.internet?.speed_in ?? 0;
+  const currentPrice = ctx.object?.displayPrice ?? Infinity;
+  const currentHdChannels = ctx.object?.tv?.channels_hd ?? 0;
+
+  const {
+    maxValue: { hdChannels, price, internetSpeed, channels },
+  } = ctx;
+
+  hdChannels.compareByMaxValue(currentHdChannels);
+  price.compareByMinValue(currentPrice);
+  internetSpeed.compareByMaxValue(currentInternetSpeed);
+  channels.compareByMaxValue(currentChannels);
+
+  return ctx;
+}
+
 export const tariffValidations = [
-  useValidateAllFields,
-  useValidateChannels,
-  useValidateInternetSpeed,
-  useValidatePrice,
-  useValidateHDChannels,
+  findBestValue,
+  checkAllFields,
+  checkChannels,
+  checkInternetSpeed,
+  checkPrice,
+  checkHDChannels,
 ];

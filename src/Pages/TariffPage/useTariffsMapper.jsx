@@ -1,4 +1,4 @@
-import { tariffContext, validationTariff } from "./TariffsConst";
+import { tariffContext, validationTariff } from "./tariffsConst";
 
 export default function useTariffsMapper(data) {
   const result = data.reduce((ctx, tariffItem) => {

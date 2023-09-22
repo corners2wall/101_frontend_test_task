@@ -10,7 +10,6 @@ import { useMemo } from "react";
 
 const getDefaultRowKey = (object) => object.id;
 
-//ToDo: Add pagination if it necessary. Use themProvide for ru locale
 export default function Table({
   data,
   columns,

@@ -1,5 +1,6 @@
+import CompareHelper from "../../Utils/CompareHelper";
 import { compose } from "../../Utils/utils";
-import { tariffValidations } from "./TariffsValidation";
+import { tariffValidations } from "./tariffsValidation";
 
 export const tariffContext = {
   tariffsWithAllRequiredFields: new Set(),
@@ -7,10 +8,10 @@ export const tariffContext = {
   tariffsWithoutHDChannels: new Set(),
   object: null,
   maxValue: {
-    HDChannels: {},
-    price: {},
-    speedInternet: {},
-    channels: {},
+    hdChannels: new CompareHelper(),
+    price: new CompareHelper(),
+    internetSpeed: new CompareHelper(),
+    channels: new CompareHelper(),
   },
 };
 

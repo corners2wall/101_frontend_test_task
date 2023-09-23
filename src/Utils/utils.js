@@ -1,4 +1,4 @@
-import CompareHelper from "./CompareHelper";
+import FieldHelper from "./FieldHelper";
 
 export const getObjectValueByPath = (object, path) => {
   if (object == null) return object;
@@ -6,6 +6,10 @@ export const getObjectValueByPath = (object, path) => {
   const parts = path.split(".");
   return parts.reduce((object, key) => object?.[key], object);
 };
+
+export const findMinValue = (a, b) => Math.min(a, b);
+
+export const findMaxValue = (a, b) => Math.max(a, b);
 
 export const compose =
   (...fns) =>
@@ -17,7 +21,7 @@ export function findBestValues(template, target) {
 
   if (!target) return "";
 
-  if (template instanceof CompareHelper && target) {
+  if (template instanceof FieldHelper && target) {
     if (template.value === target) return template.message;
 
     return "";

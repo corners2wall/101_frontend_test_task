@@ -1,6 +1,28 @@
-import CompareHelper from "../../Utils/CompareHelper";
-import { compose } from "../../Utils/utils";
+import { PROFIT_TARIFF_VALUE } from "../../Const/stringConst";
+import FieldHelper from "../../Utils/FieldHelper";
+import { compose, findMaxValue, findMinValue } from "../../Utils/utils";
 import { tariffValidations } from "./tariffsValidation";
+
+const speed_in = new FieldHelper(
+  0,
+  PROFIT_TARIFF_VALUE.bestSpeed,
+  findMaxValue
+);
+const displayPrice = new FieldHelper(
+  Infinity,
+  PROFIT_TARIFF_VALUE.bestPrice,
+  findMinValue
+);
+const channels = new FieldHelper(
+  0,
+  PROFIT_TARIFF_VALUE.mostChannels,
+  findMaxValue
+);
+const channels_hd = new FieldHelper(
+  0,
+  PROFIT_TARIFF_VALUE.mostHDChannels,
+  findMaxValue
+);
 
 export const tariffContext = {
   tariffsWithAllRequiredFields: new Set(),
@@ -9,26 +31,14 @@ export const tariffContext = {
   object: null,
   profit: {
     internet: {
-      speed_in: new CompareHelper(0, "Лучшая скорость"),
+      speed_in,
     },
-    displayPrice: new CompareHelper(Infinity, "Самый дешевый"),
+    displayPrice,
     tv: {
-      channels: new CompareHelper(0, "Больше всего каналов"),
-      channels_hd: new CompareHelper(0, "Больше всего HD каналов"),
+      channels,
+      channels_hd,
     },
   },
 };
 
 export const validationTariff = compose(...tariffValidations);
-
-// remove
-export const bestShape = {
-  internet: {
-    speed_in: new CompareHelper(0),
-  },
-  displayPrice: new CompareHelper(Infinity),
-  tv: {
-    channels: new CompareHelper(0),
-    channels_hd: new CompareHelper(0),
-  },
-};

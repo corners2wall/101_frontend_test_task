@@ -54,10 +54,10 @@ function findBestValue(ctx) {
     profit: { internet, displayPrice, tv },
   } = ctx;
 
-  displayPrice.compareByMinValue(currentPrice);
-  tv.channels.compareByMaxValue(currentChannels);
-  tv.channels_hd.compareByMaxValue(currentHdChannels);
-  internet.speed_in.compareByMaxValue(currentInternetSpeed);
+  displayPrice.compare(currentPrice);
+  tv.channels.compare(currentChannels);
+  tv.channels_hd.compare(currentHdChannels);
+  internet.speed_in.compare(currentInternetSpeed);
 
   return ctx;
 }

@@ -1,6 +1,6 @@
 import { useQuery } from "react-apollo";
 import { TARIFFS_QUERY } from "../Queries/tariffsQuery";
-import { data } from "../Consts/data";
+import { data } from "../Const/data";
 
 const getTariffsOptions = (url, provider) => ({
   skip: !provider?.id,
@@ -17,7 +17,7 @@ export default function useLoadTariffs(url, provider) {
   const tariffOptions = getTariffsOptions(url, provider);
 
   const tariffs = useQuery(TARIFFS_QUERY, tariffOptions);
-
+  // ToDo change on real data
   return data;
   //return tariffs?.data?.tariffs?.data || [];
 }

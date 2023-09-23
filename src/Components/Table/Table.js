@@ -5,7 +5,7 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
-import { getObjectProperty } from "../../Utils/utils";
+import { getObjectValueByPath } from "../../Utils/utils";
 import { useMemo } from "react";
 
 const getDefaultRowKey = (object) => object.id;
@@ -34,9 +34,13 @@ export default function Table({
         {data.map((item) => (
           <TableRow key={getRowKey(item)}>
             {columns.map(({ dataPath, renderCell }, index) => {
-              const property = getObjectProperty(item, dataPath);
+              const value = getObjectValueByPath(item, dataPath);
 
-              return renderCell(property, item, payload);
+              return renderCell({
+                value,
+                object: item,
+                payload: { ...payload, dataPath },
+              });
             })}
           </TableRow>
         ))}

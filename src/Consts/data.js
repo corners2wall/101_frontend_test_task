@@ -35,4 +35,35 @@ export const data = [
       channels_hd: null,
     },
   },
+  {
+    id: 4,
+    name: "MTS",
+    displayPrice: 800,
+    internet: null,
+    tv: null,
+  },
+  {
+    id: 5,
+    name: "Qwerty",
+    displayPrice: 800,
+    internet: {
+      speed_in: null,
+    },
+    tv: {
+      channels: 30,
+      channels_hd: 40,
+    },
+  },
+  {
+    id: 6,
+    name: "All fields",
+    displayPrice: 590,
+    internet: {
+      speed_in: 10,
+    },
+    tv: {
+      channels: 30,
+      channels_hd: 40,
+    },
+  },
 ];

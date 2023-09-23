@@ -12,7 +12,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "./Table";
 import { tariffColumns } from "../Pages/TariffPage/TariffTableColumns";
-import { data } from "../Consts/data";
 import useTariffsMapper from "../Pages/TariffPage/useTariffsMapper";
 import useLoadTariffs from "../Hooks/useLoadTariffs";
 import useLoadProviders from "../Hooks/useLoadProviders";
@@ -41,7 +40,7 @@ function Page() {
 
   const tariffs = useLoadTariffs(REGION_URL, currentProvider);
 
-  const {} = useTariffsMapper(tariffs);
+  const { sortedData, profit } = useTariffsMapper(tariffs);
 
   const handleChange = (event) => {
     const foundProvider = providers.find((x) => x.id === +event.target.value);
@@ -77,7 +76,7 @@ function Page() {
         </Select>
       </FormControl>
       <TableContainer component={Paper}>
-        <Table data={data} columns={tariffColumns} />
+        <Table data={sortedData} columns={tariffColumns} payload={{ profit }} />
       </TableContainer>
     </Container>
   );

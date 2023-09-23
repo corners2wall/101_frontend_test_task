@@ -13,5 +13,5 @@ export default function useTariffsMapper(data) {
     ...result.tariffsWithoutHDChannels,
   ];
 
-  return { sortedData };
+  return { sortedData, profit: result.profit };
 }

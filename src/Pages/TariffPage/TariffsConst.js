@@ -7,12 +7,28 @@ export const tariffContext = {
   tariffsWithPartialFields: new Set(),
   tariffsWithoutHDChannels: new Set(),
   object: null,
-  maxValue: {
-    hdChannels: new CompareHelper(),
-    price: new CompareHelper(),
-    internetSpeed: new CompareHelper(),
-    channels: new CompareHelper(),
+  profit: {
+    internet: {
+      speed_in: new CompareHelper(0, "Лучшая скорость"),
+    },
+    displayPrice: new CompareHelper(Infinity, "Самый дешевый"),
+    tv: {
+      channels: new CompareHelper(0, "Больше всего каналов"),
+      channels_hd: new CompareHelper(0, "Больше всего HD каналов"),
+    },
   },
 };
 
 export const validationTariff = compose(...tariffValidations);
+
+// remove
+export const bestShape = {
+  internet: {
+    speed_in: new CompareHelper(0),
+  },
+  displayPrice: new CompareHelper(Infinity),
+  tv: {
+    channels: new CompareHelper(0),
+    channels_hd: new CompareHelper(0),
+  },
+};

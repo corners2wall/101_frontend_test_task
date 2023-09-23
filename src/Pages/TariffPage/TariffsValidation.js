@@ -51,13 +51,13 @@ function findBestValue(ctx) {
   const currentHdChannels = ctx.object?.tv?.channels_hd ?? 0;
 
   const {
-    maxValue: { hdChannels, price, internetSpeed, channels },
+    profit: { internet, displayPrice, tv },
   } = ctx;
 
-  hdChannels.compareByMaxValue(currentHdChannels);
-  price.compareByMinValue(currentPrice);
-  internetSpeed.compareByMaxValue(currentInternetSpeed);
-  channels.compareByMaxValue(currentChannels);
+  displayPrice.compareByMinValue(currentPrice);
+  tv.channels.compareByMaxValue(currentChannels);
+  tv.channels_hd.compareByMaxValue(currentHdChannels);
+  internet.speed_in.compareByMaxValue(currentInternetSpeed);
 
   return ctx;
 }
@@ -65,8 +65,8 @@ function findBestValue(ctx) {
 export const tariffValidations = [
   findBestValue,
   checkAllFields,
+  checkHDChannels,
   checkChannels,
   checkInternetSpeed,
   checkPrice,
-  checkHDChannels,
 ];
